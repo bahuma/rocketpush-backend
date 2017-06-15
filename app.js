@@ -268,7 +268,7 @@ function addNewShows(schedule) {
 }
 
 function check() {
-  console.log('checkSchedule');
+  console.log('checkSchedule', moment());
 
   let nextItem = null;
   let schedule = null;
