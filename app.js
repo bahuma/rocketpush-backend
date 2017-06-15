@@ -53,6 +53,7 @@ function getTokensForShow(showName, type) {
               let tokens = Object.keys(val).map(key => val[key]);
               resolve(tokens);
             } else {
+              console.log('no val');
               resolve([]);
             }
           });
@@ -67,6 +68,8 @@ function getTokensForShow(showName, type) {
             tokens.push(token);
           });
         });
+
+        console.log(tokens);
 
         resolve(tokens);
       });
