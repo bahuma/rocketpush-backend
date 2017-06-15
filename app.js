@@ -48,6 +48,7 @@ function getTokensForShow(showName, type) {
           const userRef = db.ref(`users/${userid}/notificationtokens`);
           userRef.once('value', (snapshot) => {
             let val = snapshot.val();
+            console.log(val);
             if (val) {
               let tokens = Object.keys(val).map(key => val[key]);
               resolve(tokens);
