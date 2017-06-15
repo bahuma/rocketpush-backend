@@ -94,6 +94,8 @@ function sendNotification(tokens, title, body, link) {
       },
     };
 
+    console.log(tokens)
+
     admin.messaging().sendToDevice(tokens, payload).then(response => {
       let tokensToRemove = [];
 
@@ -317,6 +319,7 @@ function check() {
 
         getTokensForShow(nextItem.show, type)
           .then(tokens => {
+            console.log(tokens);
             return sendNotification(tokens, `${typeText}: ${nextItem.title}`, nextItem.topic, `http://www.rocketbeans.tv/?utm_source=${encodeURIComponent('https://rocketpush.de')}`);
           })
           .then(tokensToRemove => {
