@@ -48,7 +48,6 @@ function getTokensForShow(showName, type) {
           const userRef = db.ref(`users/${userid}/notificationtokens`);
           userRef.once('value', (snapshot) => {
             let val = snapshot.val();
-            console.log(val);
             if (val) {
               let tokens = Object.keys(val).map(key => val[key]);
               resolve(tokens);
@@ -69,8 +68,6 @@ function getTokensForShow(showName, type) {
           });
         });
 
-        console.log(tokens);
-
         resolve(tokens);
       });
     });
@@ -78,7 +75,7 @@ function getTokensForShow(showName, type) {
 }
 
 function sendNotification(tokens, title, body, link) {
-  console.log('sendNotification', title, body, link);
+  console.log('sendNotification', tokens, title, body, link);
 
   return new Promise((resolve, reject) => {
     if (tokens.length === 0) {
@@ -93,8 +90,6 @@ function sendNotification(tokens, title, body, link) {
         click_action: link,
       },
     };
-
-    console.log(tokens)
 
     admin.messaging().sendToDevice(tokens, payload).then(response => {
       let tokensToRemove = [];
@@ -319,7 +314,6 @@ function check() {
 
         getTokensForShow(nextItem.show, type)
           .then(tokens => {
-            console.log(tokens);
             return sendNotification(tokens, `${typeText}: ${nextItem.title}`, nextItem.topic, `http://www.rocketbeans.tv/?utm_source=${encodeURIComponent('https://rocketpush.de')}`);
           })
           .then(tokensToRemove => {
