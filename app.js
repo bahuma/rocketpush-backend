@@ -42,6 +42,8 @@ function getTokensForShow(showName, type) {
 
       let proms = [];
 
+      console.log(`Should send message to ${userIds.length} users: `, userIds);
+
       userIds.forEach(userid => {
         proms.push(new Promise((resolve, reject) => {
           const userRef = db.ref(`users/${userid}/notificationtokens`);
