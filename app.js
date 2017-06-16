@@ -1,7 +1,6 @@
 const admin = require('firebase-admin');
 const fetch = require('node-fetch');
 const moment = require('moment');
-const CronJob = require('cron').CronJob;
 
 admin.initializeApp({
   credential: admin.credential.cert({
@@ -348,4 +347,4 @@ function check() {
 }
 
 check();
-let job = new CronJob('0 */10 * * * *', check, null, true, 'Europe/Berlin');
+setInterval(check, 10*60*1000);

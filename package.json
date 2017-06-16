@@ -10,7 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "cron": "^1.2.1",
     "firebase-admin": "^5.0.0",
     "moment": "^2.18.1",
     "node-fetch": "^1.7.1"
