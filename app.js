@@ -177,6 +177,8 @@ function shouldNotify(item) {
     // Wenn nächste Sendung in unter 10 Minuten beginnt
     if (diff < 10) {
       console.log('Nächste Sendung startet in unter 10 Minuten');
+      resolve(true);
+      return;
 
       // Wenn Benachrichtigung über diese Sendung noch nicht gesendet wurde
       db.ref(`notifications/sent/${item.id}`).once('value', snapshot => {
@@ -346,4 +348,4 @@ function check() {
 }
 
 check();
-let job = new CronJob('0 */5 * * * *', check, null, true, 'Europe/Berlin');
+let job = new CronJob('0 */10 * * * *', check, null, true, 'Europe/Berlin');
