@@ -148,6 +148,7 @@ function findUsersAndTokenId(tokens) {
 function getCurrentPlan() {
   console.log('getCurrentPlan');
   return fetch('http://api.rbtv.rodney.io/api/1.0/schedule/schedule_linear.json')
+  // return fetch('http://dev.bahuma.io/test.json')
     .then(response => response.json());
 }
 
@@ -167,10 +168,11 @@ function getNextItem(schedule) {
 }
 
 function shouldNotify(item) {
-  console.log('check if should notify');
+  console.log('check if should notify', item.id);
   return new Promise((resolve, reject) => {
     // Differenz zur naechsten sendung in minuten
     let diff = moment(item.timeStart).diff(moment()) / 1000 / 60;
+    console.log(`Nächste Sendung startet in ${diff}`);
 
     // Wenn nächste Sendung in unter 10 Minuten beginnt
     if (diff < 10) {
@@ -178,12 +180,15 @@ function shouldNotify(item) {
 
       // Wenn Benachrichtigung über diese Sendung noch nicht gesendet wurde
       db.ref(`notifications/sent/${item.id}`).once('value', snapshot => {
-        if (snapshot.val()) {
-          console.log('Benachrichtigung wurde bereits gesendet');
-          resolve(false);
-        } else {
+        console.log(snapshot.val())
+        if (snapshot.val() === null) {
           console.log('Benachrichtigung wurde noch nicht gesendet');
           resolve(true);
+          return;
+        } else {
+          console.log('Benachrichtigung wurde bereits gesendet');
+          resolve(false);
+          return;
         }
       })
     } else {
@@ -268,7 +273,7 @@ function addNewShows(schedule) {
 }
 
 function check() {
-  console.log('checkSchedule', moment());
+  console.log('--------------- checkSchedule --------------', moment());
 
   let nextItem = null;
   let schedule = null;
@@ -339,7 +344,6 @@ function check() {
       }
     });
 }
-
 
 check();
 let job = new CronJob('0 */5 * * * *', check, null, true, 'Europe/Berlin');
