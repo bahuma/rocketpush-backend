@@ -3,3 +3,6 @@
 - `FB_CLIENT_EMAIL` (from JSON config file, downloaded from firebase console)
 - `FB_PRIVATE_KEY` (from JSON config file, downloaded from firebase console)
 - `FB_DATABASE_URL` (found in firebase console)
+
+## Deployment
+Automatically deployed to heroku (i think)
